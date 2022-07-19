@@ -3,6 +3,15 @@ import time
 from PIL import Image
 import numpy as np
 
+prot = False
+tmp_gesR = 0
+tmp_gesG = 0
+tmp_gesB = 0
+tmp_ges = tmp_gesR, tmp_gesG, tmp_gesB
+tmp_tmp_gesR = 0
+tmp_tmp_gesG = 0
+tmp_tmp_gesB = 0
+
 ##
 print("(test.jpg) File : ")
 name = input()
@@ -24,6 +33,15 @@ if(width % int(faktor) != 0):
     print("Faktor is now [2]")
     faktor = 2
 
+print("")
+print("(y)Artifact protection? y/n:")
+
+tobright = input()
+if(tobright == ""):
+	prot = True
+elif(tobright == "n"):
+	prot = False
+
 ####
 start_time = time.time()
 ####
@@ -39,14 +57,6 @@ pixel_h = int(height / faktor)
 print("")
 print("Size: "+str(pixel_w)+" x "+str(pixel_h))
 
-
-tmp_gesR = 0
-tmp_gesG = 0
-tmp_gesB = 0
-tmp_ges = tmp_gesR, tmp_gesG, tmp_gesB
-tmp_tmp_gesR = 0
-tmp_tmp_gesG = 0
-tmp_tmp_gesB = 0
 
 newimgarray = np.zeros((pixel_h, pixel_w, 3))
 
@@ -69,10 +79,29 @@ for y in range( pixel_h ):
 				
 				tmp_gesR, tmp_gesG, tmp_gesB = pictur.getpixel((xtmp+i,ytmp+j)) 
 				tmp_tmp_gesR, tmp_tmp_gesG, tmp_tmp_gesB = tmp_tmp_gesR + tmp_gesR, tmp_tmp_gesG + tmp_gesG, tmp_tmp_gesB + tmp_gesB
+		
+		#too bright protect
+		if(prot==False):
+			newimgarray[y][x][0] = tmp_tmp_gesR
+			newimgarray[y][x][1] = tmp_tmp_gesG
+			newimgarray[y][x][2] = tmp_tmp_gesB
+		elif(tmp_tmp_gesR > 255):
+			newimgarray[y][x][0] = tmp_tmp_gesR / faktor
+			newimgarray[y][x][1] = tmp_tmp_gesG / faktor
+			newimgarray[y][x][2] = tmp_tmp_gesB / faktor
+		elif(tmp_tmp_gesG > 255):
+			newimgarray[y][x][0] = tmp_tmp_gesR / faktor
+			newimgarray[y][x][1] = tmp_tmp_gesG / faktor
+			newimgarray[y][x][2] = tmp_tmp_gesB / faktor
+		elif(tmp_tmp_gesB > 255):
+			newimgarray[y][x][0] = tmp_tmp_gesR / faktor
+			newimgarray[y][x][1] = tmp_tmp_gesG / faktor
+			newimgarray[y][x][2] = tmp_tmp_gesB / faktor
+		else:
+			newimgarray[y][x][0] = tmp_tmp_gesR
+			newimgarray[y][x][1] = tmp_tmp_gesG
+			newimgarray[y][x][2] = tmp_tmp_gesB
 
-		newimgarray[y][x][0] = tmp_tmp_gesR
-		newimgarray[y][x][1] = tmp_tmp_gesG
-		newimgarray[y][x][2] = tmp_tmp_gesB
 ##
 Image.fromarray((newimgarray).astype('uint8'), mode='RGB').save(str(name)+'_x'+str(faktor)+'_Vsensor.png')
 
