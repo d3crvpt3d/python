@@ -7,8 +7,6 @@ print("(test.jpg) File : ")
 name = input()
 if(name == ""):
     name = "test.jpg"
-print("")
-print("Image = "+str(name))
 
 ##
 pictur = Image.open(str(name))
@@ -20,14 +18,10 @@ print("Binning Faktor (even subdivide from width and height): ")
 faktor = int(input())
 
 if(width % int(faktor) != 0):
-    print("")
     print("Faktor is not an even divisor!!!")
     print("")
     print("Faktor is now [2]")
     faktor = 2
-
-print("")
-print("Faktor = "+str(faktor))
 
 print("")
 print("Converting ["+str(name)+"] with a faktor of ["+str(faktor)+"]...")
@@ -36,9 +30,6 @@ print("Converting ["+str(name)+"] with a faktor of ["+str(faktor)+"]...")
 pixel_w = int(width / faktor)
 pixel_h = int(height / faktor)
 
-print("")
-print(height)
-print("")
 
 print("")
 print("Size: "+str(pixel_w)+" x "+str(pixel_h))
