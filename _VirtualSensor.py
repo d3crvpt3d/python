@@ -1,4 +1,5 @@
 #
+import time
 from PIL import Image
 import numpy as np
 
@@ -22,6 +23,10 @@ if(width % int(faktor) != 0):
     print("")
     print("Faktor is now [2]")
     faktor = 2
+
+####
+start_time = time.time()
+####
 
 print("")
 print("Converting ["+str(name)+"] with a faktor of ["+str(faktor)+"]...")
@@ -71,5 +76,9 @@ for y in range( pixel_h ):
 ##
 Image.fromarray((newimgarray).astype('uint8'), mode='RGB').save(str(name)+'_x'+str(faktor)+'_Vsensor.png')
 
+####
+end_time = time.time()
+####
+print("Time Elapsed: "+str(end_time-start_time)+"s")
 print("Done...")
 input()
