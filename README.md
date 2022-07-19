@@ -15,6 +15,6 @@ Bugs:
 
 
 ## How to use
-
+0. convert picture(best lossless formats) to png(jpg is working, but has compressions)
 1. put picture in same folder as _VirtualSensor.py
 2. run _VirtualSensor.py
