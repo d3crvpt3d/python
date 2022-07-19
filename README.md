@@ -1,5 +1,8 @@
 # VirtualSensor
 
+O(n^2) for side length or O(n) for Pixel count
+and O((1/n^root(faktor))^root(faktor))
+
 Pixel Binning to create brighter Images with a lot of detail
 
 Bugs:
