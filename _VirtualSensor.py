@@ -78,7 +78,7 @@ for y in range( pixel_h ):
 		newimgarray[y][x][1] = tmp_tmp_gesG
 		newimgarray[y][x][2] = tmp_tmp_gesB
 ##
-Image.fromarray((newimgarray).astype('uint8'), mode='RGB').save(str(name)+'____cropped.png')
+Image.fromarray((newimgarray).astype('uint8'), mode='RGB').save(str(name)+'_x'+str(faktor)+'_Vsensor.png')
 
 print("Done...")
 input()
