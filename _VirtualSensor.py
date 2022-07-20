@@ -81,22 +81,11 @@ for y in range( pixel_h ):
 				tmp_tmp_gesR, tmp_tmp_gesG, tmp_tmp_gesB = tmp_tmp_gesR + tmp_gesR, tmp_tmp_gesG + tmp_gesG, tmp_tmp_gesB + tmp_gesB
 		
 		#too bright protect
-		if(prot==False):
-			newimgarray[y][x][0] = tmp_tmp_gesR
-			newimgarray[y][x][1] = tmp_tmp_gesG
-			newimgarray[y][x][2] = tmp_tmp_gesB
-		elif(tmp_tmp_gesR > 255):
-			newimgarray[y][x][0] = tmp_tmp_gesR / faktor
-			newimgarray[y][x][1] = tmp_tmp_gesG / faktor
-			newimgarray[y][x][2] = tmp_tmp_gesB / faktor
-		elif(tmp_tmp_gesG > 255):
-			newimgarray[y][x][0] = tmp_tmp_gesR / faktor
-			newimgarray[y][x][1] = tmp_tmp_gesG / faktor
-			newimgarray[y][x][2] = tmp_tmp_gesB / faktor
-		elif(tmp_tmp_gesB > 255):
-			newimgarray[y][x][0] = tmp_tmp_gesR / faktor
-			newimgarray[y][x][1] = tmp_tmp_gesG / faktor
-			newimgarray[y][x][2] = tmp_tmp_gesB / faktor
+		if((tmp_tmp_gesR or tmp_tmp_gesG or tmp_tmp_gesB) > 255 and prot):
+			newimgarray[y][x][0] = tmp_tmp_gesR / (faktor**2)
+			newimgarray[y][x][1] = tmp_tmp_gesG / (faktor**2)
+			newimgarray[y][x][2] = tmp_tmp_gesB / (faktor**2)
+			protected = True
 		else:
 			newimgarray[y][x][0] = tmp_tmp_gesR
 			newimgarray[y][x][1] = tmp_tmp_gesG
@@ -109,5 +98,7 @@ Image.fromarray((newimgarray).astype('uint8'), mode='RGB').save(str(name)+'_x'+s
 end_time = time.time()
 ####
 print("Time Elapsed: "+str(end_time-start_time)+"s")
+print("Protected: "+str(protected))
+
 print("Done...")
 input()
